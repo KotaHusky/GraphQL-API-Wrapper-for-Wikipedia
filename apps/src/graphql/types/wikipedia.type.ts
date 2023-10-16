@@ -1,5 +1,8 @@
 import axios from "axios";
 
+/**
+ * Defines the schema for the WikipediaPage type and the Query type for retrieving Wikipedia page data.
+ */
 export const typeDefs = `
   type WikipediaPage {
     title: String!
@@ -11,11 +14,17 @@ export const typeDefs = `
   }
 `;
 
-// title is string
-// startDate is "yyyy-mm-dd" or "yyyy-mm"
-// endDate is "yyyy-mm-dd" or "yyyy-mm"
-
+/**
+ * Resolvers for the Wikipedia GraphQL type.
+ */
 export const resolvers = {
+  /**
+   * Query to get the total views of a Wikipedia page for a given month.
+   * @param _ Unused parent object.
+   * @param title Title of the Wikipedia page.
+   * @param targetMonth Target month in "yyyy-mm" format.
+   * @returns Object containing the title of the page and its total views for the given month.
+   */
   Query: {
     getWikipediaPageByMonth: async (_: any, { title, targetMonth }: any) => {
       const totalViews = await getPageviews(title, targetMonth);
@@ -25,6 +34,12 @@ export const resolvers = {
 };
 
 // Function to fetch Pageviews and sum them up
+/**
+ * Fetches the total pageviews for a given Wikipedia article for a specific month.
+ * @param title - The title of the Wikipedia article.
+ * @param targetMonth - The target month in the format "yyyy-mm".
+ * @returns The total number of pageviews for the given article and month.
+ */
 export async function getPageviews(title: string, targetMonth: string) {
 
   // Convert targetMonth "yyyy-mm" to "yyyymmdd00"
