@@ -1,14 +1,37 @@
-# GraphQL API Wrapper for Wikipedia
+# GraphQL API Wrapper for Wikipedia<!-- omit in toc -->
 
-## About
+![Apollo-GraphQL](https://img.shields.io/badge/-ApolloGraphQL-311C87?style=flat&logo=apollo-graphql)
+![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=flat&logo=docker&logoColor=white)
+![Express](https://img.shields.io/badge/express-%23404d59.svg?style=flat&logo=express&logoColor=%2361DAFB)
+![Nx](https://img.shields.io/badge/nx-143055?style=flat&logo=nx&logoColor=white)
+![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=flat&logo=typescript&logoColor=white)
+![Yarn](https://img.shields.io/badge/yarn-%232187B6.svg?style=flat&logo=yarn&logoColor=white)
 
-This is a GraphQL API wrapper for the Wikipedia API. It is built using:
+This project is a GraphQL API wrapper for the Wikipedia API.
 
-- [Nx](https://www.nx.dev/)
-- [Express](https://www.npmjs.com/package/express)
-- [@graphql-tools](https://www.npmjs.com/package/@graphql-tools)
-- [Apollo Server](https://www.npmjs.com/package/apollo-server)
-- [Docker](https://www.npmjs.com/package/docker)
+Author: Jordan Levesque - @KotaHusky
+
+## Table of Contents<!-- omit in toc -->
+
+- [Usage](#usage)
+  - [Installation](#installation)
+  - [Run the server: local](#run-the-server-local)
+  - [Run the server: Docker](#run-the-server-docker)
+  - [Explore the GraphQL Sandbox](#explore-the-graphql-sandbox)
+  - [Querying the server](#querying-the-server)
+    - [Example 1: Plain GraphQL Query](#example-1-plain-graphql-query)
+    - [Example 2: Querying the server using curl](#example-2-querying-the-server-using-curl)
+- [GraphQL](#graphql)
+  - [Extending GraphQL](#extending-graphql)
+- [Nx](#nx)
+- [Future Improvements and Production Considerations](#future-improvements-and-production-considerations)
+  - [Corner Cases](#corner-cases)
+  - [Performance](#performance)
+  - [Security](#security)
+  - [Reliability](#reliability)
+  - [Best Practices](#best-practices)
+- [License](#license)
+- [References \& Resources](#references--resources)
 
 ## Usage
 
@@ -29,6 +52,16 @@ yarn serve
 ```bash
 yarn serve:docker
 ```
+
+### Explore the GraphQL Sandbox
+
+Once the server is running, you can explore the GraphQL API using the **Sandbox** at `http://localhost:4000/`.
+
+The Sandbox allows you to:
+
+- View and reference the GraphQL schema
+- Create, run, and manage GraphQL queries
+- View schema diff (if logged in and enabled on Apollo Studio)
 
 ### Querying the server
 
@@ -59,9 +92,30 @@ curl --request POST \
   --data '{"query":"query GetWikipediaPageByMonth($title: String!, $targetMonth: String!) {\n  getWikipediaPageByMonth(title: $title, targetMonth: $targetMonth) {\n    title\n    totalViews\n  }\n}","operationName":"GetWikipediaPageByMonth","variables":{"title":"Husky","targetMonth":"2023-09"}}'
 ```
 
-## Extending the API
+## GraphQL
 
-TypeDefs and Resolvers for a given subject are stored in `.type.ts` files in the `src/graphql/types` directory. The GraphQL schema is generated on server start using the `makeExecutableSchema` function from `@graphql-tools/schema`.
+GraphQL is a query language for APIs and a runtime for fulfilling those queries with your existing data. See [here](https://graphql.org/learn/) for more information.
+
+- Self-Documenting
+- No over- or under-fetching
+- Easily extensible schema
+
+**TypeDefs** in GraphQL are similar to interfaces in TypeScript. They define the shape of the data that can be queried from the GraphQL API.
+
+**Resolvers** in GraphQL are functions that return data for a given field in the GraphQL schema.
+
+### Extending GraphQL
+
+TypeDefs and Resolvers for a given schema subject are stored in `.type.ts` files in the `src/graphql/types` directory. The GraphQL schema is generated on server start using the `makeExecutableSchema` function from `@graphql-tools/schema`.
+
+## Nx
+
+Nx is a set of extensible dev tools for monorepos and standalone projects. See [here](https://nx.dev/) for more information.
+
+- Create new projects, apps, libraries, and components with generators like `nx g @nrwl/react:component my-component`
+- Run tasks only for affected projects with `nx affected:test`
+- Cache results and run tasks in parallel for faster execution
+- Enforce and visualize boundaries between projects with `nx dep-graph`
 
 ## Future Improvements and Production Considerations
 
@@ -96,3 +150,17 @@ Handle cases where:
 ### Best Practices
 
 - [ ] Familiarize team with the Principles of GraphQL. See [here](https://principledgraphql.com/).
+
+## License
+
+[MIT](https://choosealicense.com/licenses/mit/)
+
+## References & Resources
+
+- [Nx](https://www.nx.dev/)
+- [Express](https://www.npmjs.com/package/express)
+- [@graphql-tools](https://the-guild.dev/graphql/tools/docs/introduction)
+- [Apollo Server](https://www.apollographql.com/docs/apollo-server)
+  - [Modularized Schema](https://www.apollographql.com/blog/backend/schema-design/modularizing-your-graphql-schema-code/)
+  - [Express Middleware](https://www.apollographql.com/docs/apollo-server/api/express-middleware/)
+- [Docker](https://www.npmjs.com/package/docker)
