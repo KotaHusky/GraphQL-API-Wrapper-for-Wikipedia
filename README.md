@@ -101,9 +101,9 @@ curl --request POST \
 
 ## GraphQL
 
-GraphQL is a query language for APIs and a runtime for fulfilling those queries with your existing data. See [here](https://graphql.org/learn/) for more information.
+GraphQL is a query language for APIs that allows clients to request exactly the data they need, while enabling the server to aggregate data from multiple sources with a strongly-typed schema. See [here](https://graphql.org/learn/) for more information.
 
-- Self-Documenting
+- Self-Documenting via strong types, [docstrings](https://www.apollographql.com/docs/apollo-server/schema/schema/#descriptions-docstrings), and [Introspection](https://graphql.org/learn/introspection/)
 - No over- or under-fetching
 - Easily extensible schema
 

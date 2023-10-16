@@ -4,12 +4,16 @@ import axios from "axios";
  * Defines the schema for the WikipediaPage type and the Query type for retrieving Wikipedia page data.
  */
 export const typeDefs = `
+  " A Wikipedia page. "
   type WikipediaPage {
+    " The title of the Wikipedia page. "
     title: String!
+    " The total number of views for the Wikipedia page for the given time period. "
     totalViews: Int!
   }
-
+  
   type Query {
+    " Gets the total views of a Wikipedia page for a given month. "
     getWikipediaPageByMonth(title: String!, targetMonth: String!): WikipediaPage
   }
 `;
