@@ -17,6 +17,8 @@ RUN addgroup --system api && \
 COPY dist/apps api
 RUN chown -R api:api .
 
+RUN ls
+
 # You can remove this install step if you build with `--bundle` option.
 # The bundled output will include external dependencies.
 RUN npm --prefix api --omit=dev -f install
