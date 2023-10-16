@@ -11,6 +11,8 @@ This project is a GraphQL API wrapper for the Wikipedia API.
 
 Author: Jordan Levesque - @KotaHusky
 
+License: [MIT](./LICENSE)
+
 ## Table of Contents<!-- omit in toc -->
 
 - [Usage](#usage)
@@ -30,8 +32,8 @@ Author: Jordan Levesque - @KotaHusky
   - [Performance](#performance)
   - [Security](#security)
   - [Reliability](#reliability)
+  - [Scalability \& Extensibility](#scalability--extensibility)
   - [Best Practices](#best-practices)
-- [License](#license)
 - [References \& Resources](#references--resources)
 
 ## Usage
@@ -160,8 +162,9 @@ Handle cases where:
 
 ### Security
 
-- [ ] Add authentication and authorization to the GraphQL API. See [here](https://www.apollographql.com/docs/apollo-server/security/authentication/).
+- [ ] Add authentication and authorization for role-based access to GQL operations. See [here](https://www.apollographql.com/docs/apollo-server/security/authentication/).
 - [ ] Add SSL termination to the GraphQL API. See [here](https://www.apollographql.com/docs/apollo-server/security/terminating-ssl).
+- [ ] Use organization docker images instead of public images.
 
 ### Reliability
 
@@ -170,13 +173,14 @@ Handle cases where:
 - [ ] Add CICD pipeline to build and deploy the GraphQL API via GitHub Actions.
 - [ ] Add monitoring to the GraphQL API. See [here](https://www.apollographql.com/docs/apollo-server/monitoring/metrics/).
 
+### Scalability & Extensibility
+
+- [ ] Integrate with other data sources as needed.
+- [ ] Share ownership by federating into a supergraph. See [here](https://www.apollographql.com/docs/federation/).
+
 ### Best Practices
 
 - [ ] Familiarize team with the Principles of GraphQL. See [here](https://principledgraphql.com/).
-
-## License
-
-[MIT](https://choosealicense.com/licenses/mit/)
 
 ## References & Resources
 
