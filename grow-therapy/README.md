@@ -24,6 +24,7 @@ Author: Jordan Levesque - @KotaHusky
 - [GraphQL](#graphql)
   - [Extending GraphQL](#extending-graphql)
 - [Nx](#nx)
+  - [Example Commands](#example-commands)
 - [Future Improvements and Production Considerations](#future-improvements-and-production-considerations)
   - [Corner Cases](#corner-cases)
   - [Performance](#performance)
@@ -116,6 +117,22 @@ Nx is a set of extensible dev tools for monorepos and standalone projects. See [
 - Run tasks only for affected projects with `nx affected:test`
 - Cache results and run tasks in parallel for faster execution
 - Enforce and visualize boundaries between projects with `nx dep-graph`
+
+### Example Commands
+
+*Perform a dry-run of a generating command with `--dry-run`*
+
+Create a new Nx workspace:
+
+```bash
+yarn create nx-workspace grow-therapy --package-manager=yarn --workspaceType=integrated --nx-cloud=false --preset=apps
+```
+
+Create a new Nx application:
+
+```bash
+yarn nx g @nx/node:application --name=api --bundler=esbuild --directory=apps --framework=express --docker=true --projectNameAndRootFormat=as-provided
+```
 
 ## Future Improvements and Production Considerations
 
