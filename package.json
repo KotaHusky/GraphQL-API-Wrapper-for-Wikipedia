@@ -4,7 +4,8 @@
   "license": "MIT",
   "scripts": {
     "serve": "nx serve api",
-    "serve:docker": "nx docker-build api; docker run -p 4000:4000 api"
+    "build": "nx build api",
+    "serve:docker": "make -f apps/Makefile docker-all"
   },
   "private": true,
   "dependencies": {

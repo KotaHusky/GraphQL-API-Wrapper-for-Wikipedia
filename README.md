@@ -15,8 +15,8 @@ Author: Jordan Levesque - @KotaHusky
 
 - [Usage](#usage)
   - [Installation](#installation)
-  - [Run the server: local](#run-the-server-local)
-  - [Run the server: Docker](#run-the-server-docker)
+  - [Run the server via local devserver](#run-the-server-via-local-devserver)
+  - [Run the server via Docker](#run-the-server-via-docker)
   - [Explore the GraphQL Sandbox](#explore-the-graphql-sandbox)
   - [Querying the server](#querying-the-server)
     - [Example 1: Plain GraphQL Query](#example-1-plain-graphql-query)
@@ -42,16 +42,22 @@ Author: Jordan Levesque - @KotaHusky
 yarn install
 ```
 
-### Run the server: local
+### Run the server via local devserver
 
 ```bash
 yarn serve
 ```
 
-### Run the server: Docker
+### Run the server via Docker
 
 ```bash
 yarn serve:docker
+```
+
+or
+
+```bash
+make -f apps/Makefile docker-all
 ```
 
 ### Explore the GraphQL Sandbox
