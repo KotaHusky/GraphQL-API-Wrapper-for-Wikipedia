@@ -6,80 +6,80 @@ import express from 'express';
 import http from 'http';
 import cors from 'cors';
 import bodyParser from 'body-parser';
+import { makeExecutableSchema } from '@graphql-tools/schema'
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { log } from 'console';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Setup a logger function which outputs standards amazon format to console and file
+const logger = (message: string) => {
+  const log = `${new Date().toISOString()} ${message}`;
+  console.log(log);
+  fs.appendFileSync('logs.txt', `${log}\n`);
+};
 
 interface MyContext {
   token?: string;
 }
 
-const books = [
-  {
-    title: 'The Awakening',
-    author: 'Kate Chopin',
-  },
-  {
-    title: 'City of Glass',
-    author: 'Paul Auster',
-  },
-];
+// Prep GraphQL Schema
 
-// Required logic for integrating with Express
-const app = express();
-// Our httpServer handles incoming requests to our Express app.
-// Below, we tell Apollo Server to "drain" this httpServer,
-// enabling our servers to shut down gracefully.
-const httpServer = http.createServer(app);
-
-// A schema is a collection of type definitions (hence "typeDefs")
-// that together define the "shape" of queries that are executed against
-// your data.
-const typeDefs = `#graphql
-  # Comments in GraphQL strings (such as this one) start with the hash (#) symbol.
-
-  # This "Book" type defines the queryable fields for every book in our data source.
-  type Book {
-    title: String
-    author: String
+const importTypesAndResolvers = async (dir: string) => {
+  console.log("Importing types and resolvers from:", dir);
+  const files = fs.readdirSync(dir);
+  log("Files:", files);
+  const allTypeDefs = [];
+  const allResolvers = {};
+  for (const file of files) {
+    if (file.endsWith('.type.ts') || file.endsWith('.type.js')) {
+      const filePath = path.join(dir, file);
+      log("Importing:", filePath);
+      const { typeDefs, resolvers } = await import(filePath);
+      allTypeDefs.push(typeDefs);
+      Object.assign(allResolvers, resolvers);
+    }
   }
-
-  # The "Query" type is special: it lists all of the available queries that
-  # clients can execute, along with the return type for each. In this
-  # case, the "books" query returns an array of zero or more Books (defined above).
-  type Query {
-    books: [Book]
-  }
-`;
-
-const resolvers = {
-  Query: {
-    books: () => books,
-  },
+  return { allTypeDefs, allResolvers };
 };
 
-// Same ApolloServer initialization as before, plus the drain plugin
-// for our httpServer.
+const { allTypeDefs, allResolvers } = await importTypesAndResolvers(path.join(__dirname, './graphql/types'));
+
+// Debugging steps
+log("allTypeDefs:", allTypeDefs);
+log("allResolvers:", allResolvers);
+
+// Create GraphQL schema
+const schema = makeExecutableSchema({ typeDefs: allTypeDefs, resolvers: allResolvers });
+
+const app = express();
+
+// Init Apollo & Express
+const httpServer = http.createServer(app);
 const server = new ApolloServer<MyContext>({
-  typeDefs,
-  resolvers,
+  schema,
   plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
 });
-// Ensure we wait for our server to start
+
+// Ensure we wait for the server to start
 await server.start();
 
-// Set up our Express middleware to handle CORS, body parsing,
-// and our expressMiddleware function.
+// Set up the Express middleware to handle CORS, body parsing,
+// and the expressMiddleware function.
 app.use(
   '/',
   cors<cors.CorsRequest>(),
   bodyParser.json(),
-  // expressMiddleware accepts the same arguments:
-  // an Apollo Server instance and optional configuration options
   expressMiddleware(server, {
     context: async ({ req }) => ({ token: req.headers.token }),
   }),
 );
 
-// Modified server startup using environment variables.
+// Start the server
 await new Promise<void>((resolve) => httpServer.listen({
   port: process.env.PORT || 4000,
 }, resolve));
-console.log(`🚀 Server ready at http://localhost:4000/`);
+log(`🚀 Server ready at http://localhost:${process.env.PORT || 4000}`);
