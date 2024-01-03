@@ -15,6 +15,7 @@ License: [MIT](./LICENSE)
 
 ## Table of Contents<!-- omit in toc -->
 
+- [Project Requirements](#project-requirements)
 - [Usage](#usage)
   - [Installation](#installation)
   - [Run the server via local devserver](#run-the-server-via-local-devserver)
@@ -35,6 +36,9 @@ License: [MIT](./LICENSE)
   - [Scalability \& Extensibility](#scalability--extensibility)
   - [Best Practices](#best-practices)
 - [References \& Resources](#references--resources)
+
+## Project Requirements
+<img width="483" alt="image" src="https://github.com/KotaHusky/GraphQL-API-Wrapper-for-Wikipedia/assets/100734465/9d6ddc26-f48d-48e1-9da4-0117afba7ad2">
 
 ## Usage
 
